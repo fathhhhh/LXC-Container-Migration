@@ -1,0 +1,92 @@
+#!/bin/bash
+clear
+echo "++++++++++++++++++++++++"
+echo "+ TELIPORT DESTINATION +"
+echo "++++++++++++++++++++++++"
+
+cat << "EOL"
+                              __
+                            .d$$b
+                          .' TO$;\
+                         /  : TP._;
+                        / _.;  :Tb|
+                       /   /   ;j$j
+                   _.-"       d$$$$
+                 .' ..       d$$$$;
+                /  /P'      d$$$$P. |\
+               /   "      .d$$$P' |\^"l
+             .'           `T$P^"""""  :
+         ._.'      _.'                ;
+      `-.-".-'-' ._.       _.-"    .-"
+    `.-" _____  ._              .-"
+   -(.g$$$$$$$b.              .'
+     ""^^T$$$P^)            .(:
+       _/  -"  /.'         /:/;
+    ._.'-'`-'  ")/         /;/;
+ `-.-"..--""   " /         /  ;
+.-" ..--""        -'          :
+..--""--.-"         (\      .-(\
+  ..--""              `-\(\/;`
+    _.                      :
+                            ;`-
+                           :\
+                           ;  - GLSB -
+EOL
+
+echo "--------------------------------"
+echo "- SEARCHING SSH CONFINGURATION -"
+echo "--------------------------------"
+sleep 2
+
+b="/etc/ssh/sshd_config"
+if [[ $b == "/etc/ssh/sshd_config" ]] 
+  then
+    echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+    systemctl restart sshd
+    echo ""
+    echo " IT'S THERE "
+    echo "DONE"
+    echo ""
+
+
+  else
+    echo "PermitRootLogin yes" >> /etc/ssh/ssh_config
+    systemctl restart ssh
+    echo ""
+    echo " IT'S THERE "
+    echo "DONE"
+    echo ""
+fi
+
+
+
+echo ""
+echo "--------------------"
+echo "- INSTALLING RSYNC -"
+echo "--------------------"
+sleep 2
+echo ""
+echo "    /\_/\            ___ "
+echo "   = o_o =_______    \ \  'INSTALLING' "
+echo "    __^      __(  \.__) ) "
+echo "(@)<_____>__(_____)____/"
+echo ""
+
+declare -A osInfo;
+osInfo[/etc/debian_version]="apt-get"
+osInfo[/etc/alpine-release]="apk"
+osInfo[/etc/centos-release]="yum"
+osInfo[/etc/fedora-release]="dnf"
+
+for f in ${!osInfo[@]}
+do
+   if [[ -f $f ]];then
+       package_manager=${osInfo[$f]}
+   fi
+done
+
+package="install rsync -y" 
+
+${package_manager} ${package} > /dev/null 2>&1
+
+echo "DONE"
