@@ -1,0 +1,124 @@
+#!/bin/bash
+clear
+echo "++++++++++++++++++++++++++++++++++++++++++"
+echo "+ TELIPORT YOUR MACHINE INTO OTHER WORLD +"
+echo "++++++++++++++++++++++++++++++++++++++++++"
+echo " "
+sleep 1
+cat << "EOF"
+            ______
+            _\ _~-\___
+    =  = ==(____AA____D
+                \_____\___________________,-~~~~~~~`-.._
+                /     o O o o o o O O o o o o o o O o  |\_
+                `~-.__        ___..----..                  )
+                      `---~~\___________/------------`````
+                      =  ===(_________D
+-GLSB-
+EOF
+sleep 1
+echo ""
+#comment
+echo ""
+echo "--------------------"
+echo "- INSTALLING RSYNC -"
+echo "--------------------"
+sleep 2
+echo ""
+echo "    /\_/\            ___ "
+echo "   = o_o =_______    \ \  'INSTALLING' "
+echo "    __^      __(  \.__) ) "
+echo "(@)<_____>__(_____)____/"
+echo ""
+
+declare -A osInfo;
+osInfo[/etc/debian_version]="apt-get"
+osInfo[/etc/alpine-release]="apk"
+osInfo[/etc/centos-release]="yum"
+osInfo[/etc/fedora-release]="dnf"
+
+for f in ${!osInfo[@]}
+do
+   if [[ -f $f ]];then
+       package_manager=${osInfo[$f]}
+   fi
+done
+
+package="install rsync -y" 
+
+
+${package_manager} ${package} > /dev/null 2>&1
+
+echo "DONE"
+echo " "
+echo "--------------------------------"
+echo "- PUT YOUR DESTINATION DETAILS -"
+echo "--------------------------------"
+sleep 2
+echo ""
+echo -n "TARGET IP : "
+read -r ip
+
+echo -n "USERNAME : "
+read -r username
+
+touch /tmp/excluded.txt
+
+echo "/boot" >> /tmp/excluded.txt
+echo "/mnt" >> /tmp/excluded.txt
+echo "/dev" >> /tmp/excluded.txt
+echo "/tmp" >> /tmp/excluded.txt
+echo "/sys" >> /tmp/excluded.txt
+echo "/proc" >> /tmp/excluded.txt
+echo "/backup" >> /tmp/excluded.txt
+echo "/etc/fstab" >> /tmp/excluded.txt
+echo "/etc/mtab" >> /tmp/excluded.txt
+echo "/etc/mdadm.conf" >> /tmp/excluded.txt
+echo "/etc/sysconfig/network*" >> /tmp/excluded.txt
+
+echo ""
+echo "---------------------"
+echo "- READY TO TAKE OFF -"
+echo "---------------------"
+echo ""
+sleep 2
+cat << "EOL"
+
+                       __
+                           \   `   ._
+                             \        -  .. __
+                               l ___  . - - - - ` - - - - - - - - - - - -_-
+                              |'|  __\_                           _ . -
+           ::::::::::::::::: `O\|_|     \                 _ . -_'- '
+           :::::::::::::::::: \O \|_ . ..\       _ .  - _ .- '
+           :::::::::::::::::::  \O \ _ _  -  - '_ - '
+            ::::::::::::::::::    \/_ \        /
+          ::::::::::::::               |     /
+          :::::::::                    |   ,
+                                       |_/
+
+EOL
+echo "------------------"
+echo "- ARE YOU SURE ? -"
+echo "------------------"
+echo ""
+echo "USERNAME :" $username 
+echo "IP :" $ip
+echo ""
+echo -n "(y/n) : "
+read a
+
+if [[ $a == "y" ]]
+    then
+        rsync -vPa -e "ssh -o StrictHostKeyChecking=no" --exclude-from=/tmp/excluded.txt / $username@$ip:/
+else
+    echo ""
+    echo "SEE YOU AGAIN"
+fi
+
+#rm -rf /tmp/excluded.txt
+
+
+
+
+
