@@ -1,0 +1,51 @@
+#!/bin/bash
+
+declare -A osInfo;
+osInfo[/etc/debian_version]="apt-get"
+osInfo[/etc/alpine-release]="apk"
+osInfo[/etc/centos-release]="yum"
+osInfo[/etc/fedora-release]="dnf"
+
+for f in ${!osInfo[@]}
+do
+   if [[ -f $f ]];then
+       package_manager=${osInfo[$f]}
+   fi
+done
+
+if [[ $package_manager == "yum" ]];
+then
+	echo " Installing epel"
+	yum install epel-release -y
+	echo " Installing expect"
+	yum install expect -y
+
+else 
+	echo " ubuntu install spawn"
+	apt-get install spawn -y
+       
+fi
+
+HOSTS=""192.168.20.9"
+ "192.168.23.212" 
+ "192.168.23.47"
+"
+read -p "Login: "
+read -p "Password: "
+
+
+for HOST in $HOSTS
+do
+    expect -c "
+    spawn scp -r /root/ayam root@$HOSTS:/tmp/
+    expect{
+	 "*login*" { send $USER\r;interacct }
+	}
+ 	{
+    "*password:*" { send $PASSWORD\r;interact }
+    }
+    { "*login*" { send $USER\r;interacct }
+}
+    exit
+    "
+done
