@@ -8,4 +8,4 @@ We are using rsync to execute the migration
 ![image](https://user-images.githubusercontent.com/67633326/155491908-96c79511-b876-4a3b-ab6d-7ff3a5a31d2b.png)
 5. After migration complete restart your VM and use your LCX credential
 6. Try run your services
-
+7. Incase you have a loct of container and VM you can use "sender" to distribute your "telipot" and "airport" script to your source and destination
