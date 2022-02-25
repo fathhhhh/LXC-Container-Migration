@@ -21,8 +21,8 @@ then
 	yum install expect -y
 
 else 
-	echo " ubuntu install spawn"
-	apt-get install spawn -y
+	echo " ubuntu install expect"
+	apt-get install expect -y
        
 fi
 
